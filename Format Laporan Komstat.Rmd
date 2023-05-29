@@ -1,0 +1,200 @@
+
+---
+title: "Penerapan Analisis Regresi Linier Sederhana Untuk Mengetahui Pengaruh Stres Akademik Terhadap Motivasi Belajar"
+author: "Nurul Salma"
+date: "2023-05-29"
+output:
+  prettydoc::html_pretty:
+  theme: architect
+highlight: github
+toc: true
+number_sections: true
+---
+  
+```{r include=FALSE}
+library(knitr)
+opts_chunk$set(message = FALSE)
+opts_chunk$set(warning = FALSE)
+opts_chunk$set(comment = "")
+opts_chunk$set(collapse = TRUE)
+opts_chunk$set(error = TRUE)
+opts_chunk$set(prompt = TRUE)
+opts_chunk$set(fig.align = 'center')
+```
+
+Notes Theme:
+- Kelas A: cayman  
+- Kelas B: tactile  
+- Kelas C: architect  
+- Kelas D: hpstr
+
+Library:
+  
+```{r}
+# install.packages("knitr")
+# install.packages("rmarkdown")
+# install.packages("prettydoc")
+# install.packages("equatiomatic")
+# install.packages("readxl")
+```
+
+# 1. PENDAHULUAN
+# 1.1 Latar Belakang  
+Stres merupakan suatu bagian dalam hidup yang tidak dapat terelakan pada kehidupan manusia. Hampir seluruh manusia pernah mengalami stres, baik stres psikologis, stres akademik, maupun stres di lingkungan perkuliahan. Sering kali stres ini menjadi masalah yang tidak berujung sehingga membuat orang-orang yang sedang mengalaminya merasa putus asa akan hidupnya. Yang akan menjadi fokus pada penelitian ini adalah stres akademik saat belajar pada mahahasiswa apakah memiliki pengaruh terhadap motivasi belajar. 
+
+Analisis regresi digunakan untuk mempelajari dan mengukur hubungan statistik yang terjadi atara dua atau ebih variabel. Dalam regresi sederhana dikaji dua variabel, sedangkan regresi berganda digunakan untuk mengukur pengaruh antara lebih dari satu variabel prediktor (variabel bebas) terhadpa variabel terikat. Analisis regresi sering dilakukan bersamaan dengan analisis korelasi. Analisis korelasi bertujuan untuk mengukur seberapa kuat atau derajat kedekatan suatu relasi yang terjadi antara variabel. Analisis regresi berganda dilakukan untuk mengetahui pengaruh secara simultan dan parsial antara stres akademik terhadap motivasi belajar pada mahasiswa.
+
+## 1.2 TINJAUAN PUSTAKA
+Stres akademik merupakan kasus yang paling sering dialami oleh mahasiswa, baik pada tingkat terbawah hingga mahasiswa tingkat akhir yang disebabkan oleh tuntutan akademik yang dihadapi semakin banyak seperti tugas kuliah, praktikum, ujian dan lain−lain. Sumber stres akademik pada mahasiswa terbagi menjadi empat bagian yaitu:
+- interpersonal yang mencakup hubungan dengan teman sebaya, 
+- intrapersonal yang mencakup hubungan dengan diri sendiri,
+- akademik yang mencakup prestasi di kuliah
+- lingkungan yang mencakup kondisi kuliah dan lingkungan belajar
+
+Stres akademik adalah salah satu jenis stres yang bersumber dari kegiatan akademik atau proses belajar, stres akademik timbul karena adanya tekanan akademik *(academic pressure)* dan tekanan teman sebaya *(peer pressure)*. Tekanan akademik yang dihadapi oleh mahasiswa adalah tuntuan belajar mandiri yang lebih sulit, tuntutan tugas kuliah yang banyak, praktikum yang cukup menyulitkan, serta ujian-ujian yang selalu datang bersamaan dengan tugas. Sedangkan, tekanan teman sebaya yang dihadapi oleh mahasiswa adalah tuntuan berteman dengan karakter orang yang berbeda-beda seringkali menuntut kita untuk bisa menyesuaikan dengan kodnisi tersbeut, serta kegiatan ekstrakulikuler atau organisasi di kampus yang tidak kalah pusing.  Banyaknya tuntutan yang harus dipenuhi oleh siswa, terutama di bidang akademik membuat siswa rentan untuk mengalami stres akademik.
+
+## 1.3 Statistika Deskriptif
+
+Kustituanto & Badrudin dalam Statistika Deskriptif 1 (1994, 3) mengatakan statistika deskiptif adalah serangkaian teknik yang meliputi teknik pengumpulan, penyajian, dan peringkasan data. Statistika deskriptif bertujuan untuk memberikan gambaran yang teratur, ringkas, dan jelas. Statistika deskriptif hanya menggambarkan karakteristik atau sifat-sifat dari kelompok data tanpa melakukan generalisasi. Statistika deskriptif yang biasa digunakan dalam penelitian terdiri dari rata-rata, mean, modus, variansi, dan simpangan baku. Selain itu, biasanya juga digunakan grafik seperti histogram dan pie chart.
+
+## 1.4 Analisis Regresi Linier Sederhana
+Analisis regresi adalah metode statistika yang digunakan untuk memodelkan hubungan antara variabel respon (Y) dengan variabel prediktor (X). Analisis ini dapat memprediksi nilai variabel respon dari variabel bebas yang telah diketahui. Analisis regresi linier yang hanya memiliki satu variabel respon dan satu variabel prediktor disebut regresi linier sederhana. Model regresi linier sederhana adalah sebagai berikut.
+$$
+Y=β0+β1X+ϵ
+$$
+X merupakan variabel independen/prediktor, Y adalah variabel dependen, β0 dan β1 adalah parameterparameter yang nilainya tidak diketahui yang disebut dengan koefisien regresi dan ϵ adalah galat acak (Suyono, 2018: 6).
+
+## 1.5 Asumsi pada Regresi Linier
+1. Uji Normalitas
+* Uji Shapiro Wilks digunakan untuk mengidentifikasi apakah suatu peubah acak (random variable) berdistribusi normal atau tidak. Uji ini sering diaplikasikan dalam analisis regresi untuk pemeriksaan asumsi normalitas dari galat atau kesalahan acak (random error). Uji normalitas shapiro-wilks dapat digunakan untuk sampel berukuran kecil.
+Pengujian menggunakan R dapat menggunakan fungsi : `shapiro.test(..)`
+2. Uji Signifikansi
+Untuk melihat variabel independen mana yang berpengaruh signifikan baik secara simultan maupun parsial terhadap variabel dependen maka menggunakan perintah : `summary(..)`
+
+# 2. SOURCE CODE
+## 2.1 Library 
+```{r}
+#install.packages("knitr")
+#install.packages("rmarkdown")
+#install.packages("prettydoc")
+#install.packages("readxl")
+```
+
+## 2.2 Mengimport Data
+Data diambil berdasarkan hasil kuisioner dari 10 sampel mahasiswa dengan memberikan penilaian antara 1 hingga 20 (tingkatan).
+```{r,echo = TRUE}
+library(readxl)
+dataprak <- read_excel("komstat/dataprak.xlsx")
+dataprak
+```
+## 2.3 Menyajikan Data
+```{r, include = TRUE}
+X <- dataprak$Stres_Akademik
+Y <- dataprak$Motivasi_Belajar
+data <- data.frame(X,Y)
+data
+```
+Dimana :
+X = Stres Akademik
+Y = Motivasi Belajar
+
+## 2.4 Scatter Plot
+```{r}
+y = data$Y
+x = data$Y
+plot(x,y,main = "Gambar1. Scatter Plot")
+```
+
+## 2.5 Histogram
+*Stres Akademik
+```{r}
+summary(x)
+hist1 = hist(x, xlab = "Stres Akademik", main = "Histogram Stres Akademik")
+```
+
+*Motivasi Belajar
+```{r}
+summary(y)
+hist2 = hist(y, xlab = "Motivasi Belajar", main = "Histogram Motivasi Belajar")
+```
+
+## 2.6 Uji Normalitas
+Bertujuan untuk menilai sebaran data pada sebuah kelompok data atau variabel, apakah sebaran data tersebut berdistribusi normal atau tidak.
+```{r}
+data <-residuals(regresi)
+shapiro.test(data)
+```
+
+## 2.7 Uji Signifikansi
+```{r}
+regresi <- lm(y~x, data = dataprak)
+lm(formula = y~x, data = dataprak)
+summary(regresi)
+```
+### 2.8 ANOVA (*Analysis of Variance*)
+```{r,include=FALSE}
+regresi <- lm(y~x, data = dataprak)
+lm(formula = y~x, data = dataprak)
+anova(regresi)
+```
+
+# 3. HASIL DAN PEMBAHASAN
+
+## 3.1 Statistika Deskriptif
+### 3.1.1 Stres Akademik
+Hasil analisis deskriptif pada variabel **Stres Akademik** menunjukkan bahwa skor atau tingkatan terendah yang dicapai adalah 13 dan tingkatan stres tertinggi adalah 20.
+### 3.1.2 Motivasi Belajar
+Hasil analisis deskriptif pada variabel **Motivasi Belajar** menunjukkan bahwa skor atau tingkatan terendah yang dicapai adalah 14 dan tingkatan tertinggi adalah 19.2. 
+
+## 3.2 Uji Normalitas
+Hipotesis :
+**HO** : Data Berdistribusi Normal
+**H1** : Data Tidak Berdistribusi Normal
+
+Kriteria Keputusan :
+Jika p < α(5%), maka **H0** ditolak
+Jika p > α(5%), maka **H0** diterima
+
+```{r, include=TRUE}
+data <-residuals(regresi)
+shapiro.test(data)
+```
+Berdasarkan hasil di atas, dapat dilihat bahwa p-value sebesar 0.5085. Maka keputusan yang dapat diambil adalah **H0** diterima karena p-value (0.5085) > α(0.05). Dapat disimpulkan bahwa data berdistribusi normal (asumsi normalitas galat terpenuhi).
+
+## 3.3 Uji Signifikansi
+Dengan menggunakan *software R*, diperoleh hasil pendugaan parameter sebagai berikut.
+```{r}
+regresi <- lm(y~x, data = dataprak)
+lm(formula = y~x, data = dataprak)
+summary(regresi)
+```
+Berdasarkan hasil summary di atas, maka didapatkan penduga parameter sebagai berikut:
+$$
+ Y = 20.2404 + 0.1406X
+$$
+Persamaan parameter di atas menjelaskan nilai 0.1406 pada variabel X bernilai positif, artinya semakin tinggi tingkat stres akademik pada mahasiswa maka akan semakin tinggi pula tingkat motivasi belajar. Selain itu, hasil koefisien determinasi sebesar -0.07801. 
+
+### 2.8 ANOVA (*Analysis of Variance*)
+Hipotesis:
+**H0** : Tidak ada pengaruh antara tingkat stres akademik terhadap motivasi belajar
+**H1** : Terdapat pengaruh antara tingkat stres akademik terhadap motivasi belajar
+
+Kriteria keputusan:
+Jika p < α(5%), maka **H0** ditolak
+Jika p > α(5%), maka **H0** diterima
+```{r,warning = FALSE}
+anova(regresi)
+```
+Berdasarkan hasil uji F pada penelitian ini di dapatkan nilai-p sebesar 0.7237 dimana lebih dari nilai α=0.05, maka terima H0. Dengan taraf nyata 5%, dapat disimpulkan bahwa tidak terdapat pengaruh antara tingkat stres akademik terhadap motivasi belajar.
+
+# 4. KESIMPULAN
+Berdasarkan hasil analisis di atas, dapat disimpulkan bahwa asumsi normalitas galat pada data terpenuhi, tidak terdapat pengaruh yang signifikan antara tingkat stres akademik yang dialami mahasiswa terhadap motivasi dalam belajar, namun koefisien determinasi yang dihasilkan sebesar -0,07801, bernilai negatif menunjukkan adanya masalah dalam analisis atau penggunaan metode yang tidak sesuai.
+
+# 5.DAFTAR PUSTAKA
+SUJADI, Eko. Stres akademik dan motivasi belajar mahasiswa mengikuti pembelajaran daring selama pandemi covid-19. Educational Guidance and Counseling Development Journal, 2021, 4.1: 29-41.
+
+BARSELI, Mufadhal; AHMAD, Riska; IFDIL, Ifdil. Hubungan stres akademik siswa dengan hasil belajar. Jurnal EDUCATIO: Jurnal Pendidikan Indonesia, 2018, 4.1: 40-47.
+
+PRAYOGA, Arief Hadi. Pengaruh Stres Akademik dan Kecerdasan Emosional terhadap Prestasi Belajar Mahasiswa dengan Motivasi Belajar Sebagai Variabel Intervening di Fakultas Ekonomi Universitas Islam Indonesia Yogyakarta. 2017. PhD Thesis. Universitas Islam Indonesia.
+
+RAMADAN, Merina Ramadan Merina; YUSHITA, Amanita Novi. PENGARUH STRES AKADEMIK, FASILITAS BELAJAR, DAN LINGKUNGAN BELAJAR TERHADAP MOTIVASI BELAJAR DARING MAHASISWA. Jurnal Pendidikan Akuntansi Indonesia, 2022, 20.1: 52-66.
